@@ -34,6 +34,10 @@ function playRound(playerSelection, computerSelection) {
         return "Computer wins!";
     }
 
+    if(playerSelection === "rock" && computerSelection === "rock") {
+        return "Tie!";
+    }
+
     //player picks paper
     if(playerSelection === "paper" && computerSelection === "rock") {
         return "You win!"
@@ -43,12 +47,21 @@ function playRound(playerSelection, computerSelection) {
         return "Computer wins!";
     }
 
+    if(playerSelection === "paper" && computerSelection === "paper") {
+        return "Tie!";
+    }
+
     //player picks scissors
     if(playerSelection === "scissors" && computerSelection === "paper") {
         return "You win!"
     }
+
     if(playerSelection === "scissors" && computerSelection === "rock") {
         return "Computer wins!";
+    }
+
+    if(playerSelection === "scissors" && computerSelection === "scissors") {
+        return "Tie!";
     }
 }
 
@@ -56,18 +69,16 @@ function playRound(playerSelection, computerSelection) {
 function playGame() {
     alert("Play a round of rock, paper, scissors. Who gets 5 wins first, wins");
     let computerWins = 0, playerWins = 0;
+    let round = 1;
 
-    while(computerWins < 5 || playerWins < 5) {
-
-        //As far as I remember this is broken
-        let round = 1;
+    while(computerWins < 5 && playerWins < 5) {
+        
         alert("Round: " + round);
         round++;
 
         let selection = prompt("Please enter 'rock', 'paper' or 'scissors': ");
 
-        while(selection.toLowerCase() !== "rock" && selection.toLowerCase() !== "paper" 
-            && selection.toLocaleLowerCase() !== "scissors") 
+        while(selection !== "rock" && selection !== "paper" && selection !== "scissors") 
         {
             selection = prompt("Please enter a valid choice between 'rock', 'paper' or 'scissors' ");
         }
@@ -77,8 +88,18 @@ function playGame() {
         alert("Your choice: " + selection + " | Computer choice: " + compChoice)
         alert(playRound(selection, compChoice));
 
-        //if computer wins, increment...
+        //these work fine, the variables do increment
+        if(playRound(selection, compChoice) === "Computer wins!") {
+            computerWins++;
+        }
+
+        if(playRound(selection, compChoice) === "You win!") {
+            playerWins++;
+        }
         
+        alert("computerWins: " + computerWins)
+        alert("playerWins: " + playerWins);
+
     }
 
     if(computerWins === 5) {
